@@ -1,0 +1,312 @@
+﻿@model ML.Usuario
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Usuario</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h5>Seleccion un regisro para agregar o editar su informacion </h5>
+            <hr />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 ">
+            @*<a class="btn btn-info bi bi-search "
+                   href="@Url.Action("", "Empleado",  new { @class = "btn btn-info bi bi-search", @id = "txtBusqueda", @onclick = "mostrarBoton1()" });">
+
+                </a>*@
+
+            <button type="button" id="btn-1" onclick="mostrarBoton1()" class="btn btn-info bi bi-search"> Busqueda</button>
+
+            @Html.ActionLink(" Carga masiva ", "UploadData", "", new { @class = "btn btn-primary bi bi-database-fill-up" })
+
+        </div>
+    </div>
+    <br />
+
+    @using (Html.BeginForm("GetAll", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        <br />
+
+        <div class="row">
+            <div class="col-md-12 ">
+
+
+                @Html.LabelFor(model => model.Nombre, new { @id = "lbNombre", @style = "display: none;" })
+                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", placeholder = " Nombre", @onkeypress = "return ValidarSoloLetras(event,'lblNombre')", @id = "txtNombre", @style = "display: none;" })
+                @Html.ValidationMessageFor(model => model.Nombre, null, new { @class = "text-danger", @id = "lblNombre", @style = "display: none;" })
+
+
+                @Html.LabelFor(model => model.ApellidoPaterno, new { @id = "lbApellidoPaterno", @style = "display: none;" })
+                @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", placeholder = " Apellido Paterno", @onkeypress = "return ValidarSoloLetras(event,'lblApellidoPaterno')", @id = "txtApellidoPaterno", @style = "display: none;" })
+                @Html.ValidationMessageFor(model => model.ApellidoPaterno, null, new { @class = "text-danger", @id = "lblApellidoPaterno" })
+
+                @Html.LabelFor(model => model.ApellidoMaterno, new { @id = "lbApellidoMaterno", @style = "display: none;" })
+                @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", placeholder = " Apellido Materno", @onkeypress = "return ValidarSoloLetras(event,'lblApellidoMaterno')", @id = "txtApellidoMaterno", @style = "display: none;" })
+                @Html.ValidationMessageFor(model => model.ApellidoMaterno, null, new { @class = "text-danger", @id = "lblApellidoMaterno" })
+
+                <button type="submit" class="btn btn-info bi bi-search " id="btnCargar" style="display: none"> </button>
+
+            </div>
+        </div>
+        <br />
+
+    }
+
+
+    <div class="row">
+        <div class="col-md- offset-11 ">
+            @Html.ActionLink(" ", "Form", "Usuario", new { @class = "btn btn-success bi bi-person-plus-fill" })
+
+        </div>
+    </div>
+    @if (Model.Usuarios != null)
+    {
+
+        <div class="row">
+            <div class="col-md-11">
+                <div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Editar</th>
+                                <th class="visually-hidden-focusable">IdUsuario</th>
+                                <th>UserName</th>
+                                <th>Nombre</th>
+                                <th>ApellidoPaterno</th>
+                                <th>ApellidoMaterno</th>
+                                <th>Email</th>
+                                <th>Password</th>
+                                <th>Sexo</th>
+                                <th>Telefono</th>
+                                <th>Celular</th>
+                                <th>FechaNacimiento</th>
+                                <th>CURP</th>
+                                <th>IdRol</th>
+                                <th>Direccion</th>
+                                <th>Statu</th>
+                                <th>Imagen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (ML.Usuario usuario in Model.Usuarios)
+                            {
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-warning glyphicon glyphicon-edit bi bi-pencil-square "
+                                           href="@Url.Action("Form", "Usuario", new {IdUsuario = usuario.IdUsuario})" );">
+
+                                        </a>
+                                    </td>
+                                    <td class="visually-hidden-focusable">@usuario.IdUsuario</td>
+                                    <td>@usuario.UserName</td>
+                                    <td>@usuario.Nombre</td>
+                                    <td>@usuario.ApellidoPaterno</td>
+                                    <td>@usuario.ApellidoMaterno</td>
+                                    <td>@usuario.Email</td>
+                                    <td>@usuario.Password</td>
+                                    <td>@usuario.Sexo</td>
+                                    <td>@usuario.Telefono</td>
+                                    <td>@usuario.Celular</td>
+                                    <td>@usuario.FechaNacimiento</td>
+                                    <td>@usuario.CURP</td>
+                                    <td>@usuario.Rol.IdRol</td>
+                                    <td>@usuario.Direccion.Calle</td>
+                                    <td>
+
+                                        @*@if (usuario.Statu == true)
+                                            {
+                                                <a class="btn btn-success  bi bi-layout-sidebar-inset-reverse bi-3x "
+                                                   href="@Url.Action("UpdateStatu", "Usuario", new {IdUsuario = usuario.IdUsuario, usuario.Statu})" style="width:50px; height:40px; ">
+
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a class="btn btn-light btn-outline-dark bi bi-layout-sidebar-inset"
+                                                   href="@Url.Action("UpdateStatu", "Usuario", new {IdUsuario = usuario.IdUsuario, usuario.Statu})" style="width:50px; height:40px; ">
+
+                                                </a>
+                                            }*@
+
+
+                                        <label class="switch">
+                                            @if (usuario.Statu)
+                                            {
+                                                <input class="chkStatu" value="@usuario.IdUsuario" type="checkbox" checked>
+                                                <span class="slider round"></span>
+                                            }
+                                            else
+                                            {
+                                                <input class="chkStatu" value="@usuario.IdUsuario" type="checkbox">
+                                                <span class="slider round"></span>
+                                            }
+                                        </label>
+                                        <style>
+                                            .switch {
+                                                position: relative;
+                                                display: inline-block;
+                                                width: 60px;
+                                                height: 34px;
+                                            }
+
+                                                .switch input {
+                                                    opacity: 0;
+                                                    width: 0;
+                                                    height: 0;
+                                                }
+
+                                            .slider {
+                                                position: absolute;
+                                                cursor: pointer;
+                                                top: 0;
+                                                left: 0;
+                                                right: 0;
+                                                bottom: 0;
+                                                background-color: #ccc;
+                                                -webkit-transition: .4s;
+                                                transition: .4s;
+                                            }
+
+                                                .slider:before {
+                                                    position: absolute;
+                                                    content: "";
+                                                    height: 26px;
+                                                    width: 26px;
+                                                    left: 4px;
+                                                    bottom: 4px;
+                                                    background-color: white;
+                                                    -webkit-transition: .4s;
+                                                    transition: .4s;
+                                                }
+
+                                            input:checked + .slider {
+                                                background-color: green;
+                                            }
+
+                                            input:focus + .slider {
+                                                box-shadow: 0 0 1px #2196F3;
+                                            }
+
+                                            input:checked + .slider:before {
+                                                -webkit-transform: translateX(26px);
+                                                -ms-transform: translateX(26px);
+                                                transform: translateX(26px);
+                                            }
+
+                                            /* Rounded sliders */
+                                            .slider.round {
+                                                border-radius: 34px;
+                                            }
+
+                                                .slider.round:before {
+                                                    border-radius: 50%;
+                                                }
+                                        </style>
+
+                                    </td>
+
+                                    @if (usuario.Imagen != null)
+                                    {
+                                        <td>
+                                            <img src="data:image/jpg;base64,@Convert.ToBase64String(@usuario.Imagen)" alt="@usuario.UserName" style="width: 125px; height: 100px;" />
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <img src="~/Images/usuario.jpg" alt="@usuario.UserName" style="width: 125px; height: 100px;" />
+                                        </td>
+                                    }
+                                    <td>
+                                        <a class="btn btn-danger bi bi-trash"
+                                           href="@Url.Action("Delete", "Usuario", new {IdUsuario = usuario.IdUsuario})"
+                                           onclick="return confirm('estas seguro que deseas eliminar este registro? ');">
+
+                                        </a>
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger " role="alert">
+            No encontraron Usuario registrados. Error: @ViewBag.Message;
+        </div>
+    }
+
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".chkStatu").click(function ()
+        {
+          var chk = $(this)[0].checked;
+          var idUsuario = $(this)[0].value;
+            $.ajax
+            ({
+                type: 'POST',
+                url: '@Url.Action("UpdateStatu")',
+                datatype: 'json',
+                data: { IdUsuario: idUsuario, Statu: chk },
+                success: function(result)
+                {
+                    alert('El statu se actualizo correctamente ')
+                },
+                error: function (ex)
+                {
+                    alert('Failed ' + ex);
+                }
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    var btn_1 = document.getElementById('btn-1');
+    var txt_1 = document.getElementById('txtNombre');
+    var lb_1 = document.getElementById('lbNombre');
+    var lbl_1 = document.getElementById('lblNombre');
+
+    var txt_2 = document.getElementById('txtApellidoPaterno');
+    var lb_2 = document.getElementById('lbApellidoPaterno');
+    var lbl_2 = document.getElementById('lblApellidoPaterno');
+
+    var txt_3 = document.getElementById('txtApellidoMaterno');
+    var lb_3 = document.getElementById('lbApellidoMaterno');
+    var lbl_3 = document.getElementById('lblApellidoMaterno');
+
+    var btn_2 = document.getElementById('btnCargar');
+
+    function mostrarBoton1() {
+        txt_1.style.display = 'inline';
+        lb_1.style.display = 'inline';
+        lbl_1.style.display = 'inline';
+        btn_2.style.display = 'inline';
+
+        txt_2.style.display = 'inline';
+        lb_2.style.display = 'inline';
+        lbl_2.style.display = 'inline';
+
+        txt_3.style.display = 'inline';
+        lb_3.style.display = 'inline';
+        lbl_3.style.display = 'inline';
+    }
+</script>

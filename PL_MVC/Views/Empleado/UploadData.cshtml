@@ -1,0 +1,139 @@
+﻿@model ML.Empleado
+@{
+    ViewBag.Title = "UploadData";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Carga masiva</h2>
+
+<div class="container">
+
+    @using (Html.BeginForm("UploadData", "Empleado", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        <div class="btn-toolbar " role="toolbar">
+            <div class="d-grid gap-2 ">
+                <button type="button" id="btn-1" onclick="mostrarBoton1()" class="btn btn-secondary bi bi-filetype-txt" style="width:600px; height:40px;"> Carga mediante .TXT</button>
+
+            </div>
+            <div class="d-grid gap-2 ">
+                <button type="button" id="btn-2" onclick="mostrarBoton1()" class="btn btn-primary bi bi-filetype-xlsx" style="width:600px; height:40px;"> Carga mediante Excel </button>
+
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-md-3 form-control" style="width:550px; height:55px;">
+                <label>Archivo</label>
+                <input type="file" id="fulTxt" name="cargaMasiva" class=" form-control" style="display: none;" />
+            </div>
+            @Html.HiddenFor(model => model.Empleados)
+            @if (Session["ListEmpleados"] == null)
+            {
+                <div class=" col-md-2">
+                    <button type="submit" class="btn btn-info bi bi-eye "> Visualizar</button>
+
+                </div>
+
+            }
+            else
+            {
+
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-success bi bi-save "> Cargar</button>
+                    @Html.ActionLink("Limpiar", "UploadData", "Empleado", new { @class = "btn btn-warning" })
+                    
+                </div>
+            }
+        </div>
+        <br />
+
+        <br />
+        <div class="row">
+            <div class="form-control">
+
+                @Html.LabelFor(model => model.Error)
+                <br />
+                @Html.TextBoxFor(model => model.Error, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Error, null, new { @calss = "text-danger", @id = "lblError" })
+
+            </div>
+        </div>
+
+
+    }
+
+    @if (Model.Empleados != null)
+    {
+
+        <div class="row">
+            <div class="col-md-11">
+                <div>
+                    <table class="table table-bordered ">
+                        <thead>
+                            <tr>
+                                <th>NumeroEmpleado</th>
+                                <th>RFC</th>
+                                <th>Nombre</th>
+                                <th>ApellidoPaterno</th>
+                                <th>ApellidoMaterno</th>
+                                <th>Email</th>
+                                <th>Telefono</th>
+                                <th>FechaNacimiento</th>
+                                <th>NSS</th>
+                                <th>FechaIngreso</th>
+                                <th>IdEmpresa</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (ML.Empleado empleado in Model.Empleados)
+                            {
+
+                                <tr>
+                                    <td>@empleado.NombreEmpleado</td>
+                                    <td>@empleado.RFC</td>
+                                    <td>@empleado.Nombre</td>
+                                    <td>@empleado.ApellidoPaterno</td>
+                                    <td>@empleado.ApellidoMaterno</td>
+                                    <td>@empleado.Email</td>
+                                    <td>@empleado.Telefono</td>
+                                    <td>@empleado.FechaNacimiento</td>
+                                    <td>@empleado.NSS</td>
+                                    <td>@empleado.FechaIngreso</td>
+                                    <td>@empleado.Empresa.IdEmpresa</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    <br />
+    <div class="row">
+        <div class="col-md-1">
+            @Html.ActionLink("Regresar", "GetAll", "Empleado", new { @class = "btn btn-warning" })
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var btn_1 = document.getElementById('btn-1');
+    var btn_2 = document.getElementById('fulTxt');
+    var btn_3 = document.getElementById('btn-2');
+
+    function mostrarBoton1() {
+        btn_2.style.display = 'inline';
+        /*btn_4.style.display = 'none';*/
+    }
+
+    //var btn_3 = document.getElementById('btn-2');
+    //var btn_4 = document.getElementById('fulExel');
+
+    //function mostrarBoton2() {
+    //    btn_4.style.display = 'inline';
+    //    btn_2.style.display = 'none';
+    //}
+</script>

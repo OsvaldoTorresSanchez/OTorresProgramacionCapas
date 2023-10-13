@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b49fec7fa8e34d7ba19283b14f440cc3" Name="Diagram1" ZoomLevel="61">
+        <EntityTypeShape EntityType="OTorresProgramacionCapasModel.Rol" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OTorresProgramacionCapasModel.USUARIO" Width="1.5" PointX="3" PointY="1" />
+        <AssociationConnector Association="OTorresProgramacionCapasModel.FK__USUARIO__IdRol" />
+        <EntityTypeShape EntityType="OTorresProgramacionCapasModel.Colonia" Width="1.5" PointX="12.125" PointY="0.875" />
+        <EntityTypeShape EntityType="OTorresProgramacionCapasModel.Estado" Width="1.5" PointX="7.625" PointY="0.875" />
+        <EntityTypeShape EntityType="OTorresProgramacionCapasModel.Municipio" Width="1.5" PointX="9.875" PointY="0.875" />
+        <EntityTypeShape EntityType="OTorresProgramacionCapasModel.Pai" Width="1.5" PointX="5.375" PointY="1.125" />
+        <AssociationConnector Association="OTorresProgramacionCapasModel.FK__Colonia__IdMunicipio" />
+        <AssociationConnector Association="OTorresProgramacionCapasModel.FK__Estado__IdPais" />
+        <AssociationConnector Association="OTorresProgramacionCapasModel.FK__Municipio__IdEstado" />
+        <EntityTypeShape EntityType="OTorresProgramacionCapasModel.Direccion" Width="1.5" PointX="14.5" PointY="1" />
+        <AssociationConnector Association="OTorresProgramacionCapasModel.FK__DIRECCION__IdColonia" />
+        <AssociationConnector Association="OTorresProgramacionCapasModel.FK__DIRECCION__IdUsuario" />
+        <EntityTypeShape EntityType="OTorresProgramacionCapasModel.Empleado" Width="1.5" PointX="7.625" PointY="4" />
+        <EntityTypeShape EntityType="OTorresProgramacionCapasModel.Empresa" Width="1.5" PointX="5.375" PointY="5.125" />
+        <AssociationConnector Association="OTorresProgramacionCapasModel.FK__Empleado__Empresa" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

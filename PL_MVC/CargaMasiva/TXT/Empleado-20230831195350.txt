@@ -1,0 +1,6 @@
+NumeroEmpleado|RFC          |Nombre|ApellidoPaterno|ApellidoMaterno|Email               |Telefono  |FechaNacimiento|NSS       |FechaIngreso|IdEmpresa
+Maria         |QWERT09876RT5|Maria |Lopez          |Garcia         |marialopez@gmail.com|5678901234|03/05/1995     |QWERTY1234|03/05/2015  |2
+Pedro         |ZXCVB09876RT5|Pedro |Rodriguez      |Martinez       |peddriguez@gmail.com|9876543210|08/04/1980     |ZXCVBN1234|08/04/2005  |1
+Ana           |MNBVC09876RT5|Ana   |Martinez       |Gonzalez       |anmartinez@gmail.com|6543127890|11/05/2000     |MNBVCX1234|11/05/2020  |2
+Luis          |LKJHG09876RT5|Luis  |Gomez          |Fernandez      |luisgomez1@gmail.com|8901234567|06/03/1992     |LKJHGF1234|06/03/2012  |1
+Sofia         |POIUY09876RT5|Sofia |Perez          |Sanchez        |sofiaperez@gmail.com|1234567890|09/08/1988     |POIUYT1234|09/08/2008  |1

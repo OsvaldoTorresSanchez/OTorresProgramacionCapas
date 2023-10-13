@@ -1,0 +1,221 @@
+﻿@model ML.Empleado
+@{
+    ViewBag.Title = "EmpleadoGetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Empleados GetAll</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h5>Seleccion un registro para agregar o editar su informacion </h5>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 ">
+            @*<a class="btn btn-info bi bi-search "
+                   href="@Url.Action("", "Empleado",  new { @class = "btn btn-info bi bi-search", @id = "txtBusqueda", @onclick = "mostrarBoton1()" });">
+
+                </a>*@
+
+            <button type="button" id="btn-1" onclick="mostrarBoton1()" class="btn btn-info bi bi-search"> Busqueda</button>
+
+            @Html.ActionLink(" Carga masiva ", "UploadData", "Empleado", new { @class = "btn btn-primary bi bi-database-fill-up" })
+
+        </div>
+    </div>
+    <br />
+
+    @using (Html.BeginForm("GetAll", "Empleado", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        <br />
+
+        <div class="row">
+            <div class="col-md-11">
+
+
+                @Html.LabelFor(model => model.Nombre, new { @id = "lbNombre", @style = "display: none;" })
+                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", placeholder = " Nombre", @id = "txtNombre", @style = "display: none;" })
+                @*@Html.ValidationMessageFor(model => model.Nombre, null, new { @class = "text-danger", @id = "lblNombre", @style = "display: none;" })*@
+
+
+                @Html.LabelFor(model => model.ApellidoPaterno, new { @id = "lbApellidoPaterno", @style = "display: none;" })
+                @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", placeholder = " Apellido Paterno", @id = "txtApellidoPaterno", @style = "display: none;" })
+                @*@Html.ValidationMessageFor(model => model.ApellidoPaterno, null, new { @class = "text-danger", @id = "lblApellidoPaterno" })*@
+
+                @Html.LabelFor(model => model.ApellidoMaterno, new { @id = "lbApellidoMaterno", @style = "display: none;" })
+                @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", placeholder = " Apellido Materno", @id = "txtApellidoMaterno", @style = "display: none;" })
+                @*@Html.ValidationMessageFor(model => model.ApellidoMaterno, null, new { @class = "text-danger", @id = "lblApellidoMaterno" })*@
+
+                <br />
+                @Html.LabelFor(model => model.Empresa.IdEmpresa, new { @id = "lbIdEmpresa", @style = "display: none;" })
+                @Html.DropDownListFor(model => model.Empresa.IdEmpresa, new SelectList(Model.Empresa.Empresas, "IdEmpresa", "Nombre"), "Seleccione una opción", new { @class = "form-control", @id = "txtIdEmpresa", @style = "display: none;" })
+
+
+
+            </div>
+        </div>
+        <br />
+                <button type="submit" class="btn btn-info bi bi-search " id="btnCargar" style="display: none"> </button>
+
+    }
+
+
+    <div class="row">
+        <div class="col-md- offset-11 ">
+            @Html.ActionLink(" ", "Form", "Empleado", new { @class = "btn btn-success bi bi-person-plus-fill" })
+
+        </div>
+    </div>
+    <br />
+    @if (Model.Empleados != null)
+    {
+
+        <div class="row">
+            <div class="col-md-11">
+                <div>
+                    <table class="table table-bordered ">
+                        <thead>
+                            <tr>
+                                <th>Editar</th>
+                                <th class="visually-hidden-focusable">IdEmpleado</th>
+                                <th>NumeroEmpleado</th>
+                                <th>RFC</th>
+                                <th>Nombre</th>
+                                <th>ApellidoPaterno</th>
+                                <th>ApellidoMaterno</th>
+                                <th>Email</th>
+                                <th>Telefono</th>
+                                <th>FechaNacimiento</th>
+                                <th>NSS</th>
+                                <th>FechaIngreso</th>
+                                <th>IdEmpresa</th>
+                                <th>Foto</th>
+
+                                @*<th>Direccion</th>
+                                    <th>Statu</th>
+                                    <th>Imagen</th>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (ML.Empleado empleado in Model.Empleados)
+                            {
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-warning glyphicon glyphicon-edit bi bi-pencil-square "
+                                           href="@Url.Action("Form", "Empleado", new {IdEmpleado = empleado.IdEmpleado})" );">
+
+                                        </a>
+                                    </td>
+                                    <td class="visually-hidden-focusable">@empleado.IdEmpleado</td>
+                                    <td>@empleado.NombreEmpleado</td>
+                                    <td>@empleado.RFC</td>
+                                    <td>@empleado.Nombre</td>
+                                    <td>@empleado.ApellidoPaterno</td>
+                                    <td>@empleado.ApellidoMaterno</td>
+                                    <td>@empleado.Email</td>
+                                    <td>@empleado.Telefono</td>
+                                    <td>@empleado.FechaNacimiento</td>
+                                    <td>@empleado.NSS</td>
+                                    <td>@empleado.FechaIngreso</td>
+                                    <td>@empleado.Empresa.Nombre</td>
+                                    @*<td>@usuario.Direccion.Calle</td>*@
+
+                                    @if (empleado.Foto != null)
+                                    {
+                                        <td>
+                                            <img src="data:image/jpg;base64,@Convert.ToBase64String(empleado.Foto)" alt="@empleado.NombreEmpleado" style="width:125px; height:100px;" />
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <img src="~/Images/usuario.jpg" alt="@empleado.NombreEmpleado" style="width: 125px; height: 100px; " />
+                                        </td>
+                                    }
+
+                                    <td>
+                                        <a class="btn btn-danger bi bi-trash"
+                                           href="@Url.Action("Delete", "Empleado", new {IdEmpleado = empleado.IdEmpleado})"
+                                           onclick="return confirm('estas seguro que deseas eliminar este registro? ');">
+
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+
+    }
+    else
+    {
+        <div class="alert alert-danger " role="alert">
+            No encontraron Empelado registrados. Error: @ViewBag.Message;
+        </div>
+
+    }
+    <div class="row">
+        <div class="col-md-1">
+            <a class="btn btn-danger  bi bi-arrow-90deg-left " id="btnRegresar" ;
+               href="@Url.Action("GetAll", "Empleado")"></a>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var txt_1 = document.getElementById('txtNombre');
+    var lb_1 = document.getElementById('lbNombre');
+    //var lbl_1 = document.getElementById('lblNombre');
+
+    var txt_2 = document.getElementById('txtApellidoPaterno');
+    var lb_2 = document.getElementById('lbApellidoPaterno');
+   // var lbl_2 = document.getElementById('lblApellidoPaterno');
+
+    var txt_3 = document.getElementById('txtApellidoMaterno');
+    var lb_3 = document.getElementById('lbApellidoMaterno');
+   // var lbl_3 = document.getElementById('lblApellidoMaterno');
+
+    var txt_4 = document.getElementById('txtIdEmpresa');
+    var lb_4 = document.getElementById('lbIdEmpresa');
+
+    var btn_1 = document.getElementById('btn-1');
+    var btn_2 = document.getElementById('btnCargar');
+
+    function mostrarBoton1() {
+        txt_1.style.display = 'inline';
+        lb_1.style.display = 'inline';
+   //     lbl_1.style.display = 'inline';
+        btn_2.style.display = 'inline';
+
+        txt_2.style.display = 'inline';
+        lb_2.style.display = 'inline';
+ //       lbl_2.style.display = 'inline';
+
+        txt_3.style.display = 'inline';
+        lb_3.style.display = 'inline';
+    //    lbl_3.style.display = 'inline';
+
+        txt_4.style.display = 'inline';
+        lb_4.style.display = 'inline';
+    }
+</script>
+
+
+
+
+
+
+
+
